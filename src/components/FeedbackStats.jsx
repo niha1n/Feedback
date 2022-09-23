@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import FeedbackContext from "../context/FeedbackContext";
+import { FaStar } from "react-icons/fa";
 
 function FeedbackStats() {
   const { feedback } = useContext(FeedbackContext);
@@ -18,7 +19,7 @@ function FeedbackStats() {
       ) : (
         <h4>{feedback.length} Reviews</h4>
       )}
-      <h4>Average Rating: {isNaN(average) ? 0 : average}</h4>
+      <h4>Average Rating: {isNaN(average) ? 0 : average} <FaStar /> </h4>
     </div>
   );
 }

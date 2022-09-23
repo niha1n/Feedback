@@ -1,22 +1,31 @@
-import {useState, useContext, useEffect} from 'react'
-import FeedbackContext from '../context/FeedbackContext';
+import { useState, useContext, useEffect } from "react";
+import { FaStar } from "react-icons/fa";
+import { IconContext } from "react-icons";
+import FeedbackContext from "../context/FeedbackContext";
 
+function RatingSelect({ select }) {
+  const [selected, setSelected] = useState(10);
+  const { feedbackEdit } = useContext(FeedbackContext);
 
-function RatingSelect({select}) {
-    const [selected,setSelected]=useState(10)
-    const { feedbackEdit } = useContext(FeedbackContext);
+  useEffect(() => {
+    setSelected(feedbackEdit.item.rating);
+  }, [feedbackEdit]);
 
-  useEffect(()=>{
-  setSelected(feedbackEdit.item.rating)},[feedbackEdit])
-
-    const handleChange = (e)=> {
-        setSelected(+e.currentTarget.value)
-        select(+e.currentTarget.value)
-    }
+  const handleChange = (e) => {
+    setSelected(+e.currentTarget.value);
+    select(+e.currentTarget.value);
+  };
+  const check = function (x) {
+    return selected === x + 1;
+  };
+  const changeColor = (num) => {
+    const icon = document.querySelector("FaStar");
+    console.log(icon);
+  };
 
   return (
-    <div>
-         <ul className='rating'>
+    <div className="rating-check">
+      <ul className='rating'>
       {Array.from({ length: 10 }, (_, i) => (
         <li key={`rating-${i + 1}`}>
           <input
@@ -32,7 +41,7 @@ function RatingSelect({select}) {
       ))}
     </ul>
     </div>
-  )
+  );
 }
 
-export default RatingSelect
+export default RatingSelect;

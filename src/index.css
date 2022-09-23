@@ -52,6 +52,9 @@ header {
   text-align: center;
 }
 
+.ratingIcon{
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
 .rating {
   display: flex;
   align-items: center;
@@ -62,7 +65,7 @@ header {
 .rating li,
 .num-display {
   position: relative;
-  background: #fff;
+  background: #f4f4f4;
   width: 50px;
   height: 50px;
   padding: 10px;
@@ -87,8 +90,8 @@ header {
 
 .rating li:hover,
 .num-display {
-  background: #100F0F;
-  color: #E2DCC8;
+  background: #000000;
+  color: #fff;
 }
 
 [type='radio'] {
@@ -96,8 +99,8 @@ header {
 }
 
 [type='radio']:checked ~ label {
-  background: #100F0F;
-  color: #E2DCC8;
+  background: #000000;
+  color: #fff;
 }
 
 .input-group {
@@ -107,6 +110,7 @@ header {
   padding: 8px 10px;
   border-radius: 8px;
 }
+
 
 input {
   flex-grow: 2;
@@ -168,12 +172,10 @@ input:focus {
   opacity: 0.9;
 }
 .rating-box{
-  padding: 2px 5px;
   background: #100F0F;
   color: #fff;
   border-radius: 5px;
-  width:20%;
-  margin-top:15px;
+  width:10%;
   text-align: center;
 
 }
@@ -236,5 +238,14 @@ input:focus {
 
   .input-group input {
     width: 80%;
+  }
+ 
+  .rating-box{
+    background: #100F0F;
+    color: #fff;
+    border-radius: 5px;
+    width:15vw;
+    text-align: center;
+  
   }
 }

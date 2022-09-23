@@ -1,52 +1,71 @@
-import { createContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
+import { createContext, useState, useEffect } from "react";
 const FeedbackContext = createContext();
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      rating: 10,
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
-    },
-    {
-      id: 2,
-      rating: 9,
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
-    },
-    {
-      id: 3,
-      rating: 8,
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. consequuntur vel vitae commodi alias voluptatem est voluptatum ipsa quae.',
-    },
-  ]);
-
+  const [feedback, setFeedback] = useState([]);
+  const [isLoading,setIsLoading] = useState(true)
   const [feedbackEdit,setFeedbackEdit]= useState(
     {
       item: {},
       edit:false,
     }
   )
+    useEffect(() => {
+      fetchFeedback()
+    },[])
+
+//fetch feedback
+const fetchFeedback = async()=>{
+  const response = await fetch(`https://db-feedback.herokuapp.com/feedback?_sort=id&_order=desc`)
+  const data = await response.json()
+  setFeedback(data)
+  setIsLoading(false)
+}   
+
+
 //Delete feedback
-  const deleteFeedback = (id) => {
+  const deleteFeedback = async (id) => {
     if (window.confirm("Are you sure you want to delete?"))
+      {
+      await fetch(`https://db-feedback.herokuapp.com/feedback/${id}` , 
+      {method :'DELETE'})
       setFeedback(feedback.filter((item) => item.id !== id));
+    }
+    
+
   };
 //Edit feedback
-  const editFeedback= (item)=>{
+    const editFeedback= (item)=>{
+      setFeedbackEdit({
+        item,
+        edit:true,
+      })
+    }
+  const updateFeedback = async (id, updItem) => {
+    const response = await fetch(`https://db-feedback.herokuapp.com/feedback/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updItem),
+    });
+    const data = await response.json();
+    setFeedback(feedback.map((item) => (item.id === id ? data : item)));
+
     setFeedbackEdit({
-      item,
-      edit:true,
+      item : {},
+      edit:false,
     })
-  }
-  const updateFeedback=(id,updItem)=>
-  {
-      setFeedback(feedback.map((item)=> item.id === id ? {...item, ...updItem} : item))
-  }
+
+  };
+
+
 //Add feedback
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
+  const addFeedback = async (newFeedback) => {
+    const response = await fetch(`https://db-feedback.herokuapp.com/feedback` , 
+    {method :'POST',
+     headers : {'Content-Type' :'application/json'},
+    body: JSON.stringify(newFeedback)
+    })
+    const data = await response.json()
+    setFeedback([data, ...feedback]);
   };
 
   return (
@@ -54,6 +73,7 @@ export const FeedbackProvider = ({ children }) => {
       value={{
         feedback,
         feedbackEdit,
+        isLoading,
         deleteFeedback,
         addFeedback,
         editFeedback,

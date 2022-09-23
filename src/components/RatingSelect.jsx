@@ -1,6 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import { FaStar } from "react-icons/fa";
-import { IconContext } from "react-icons";
 import FeedbackContext from "../context/FeedbackContext";
 
 function RatingSelect({ select }) {
@@ -15,14 +13,7 @@ function RatingSelect({ select }) {
     setSelected(+e.currentTarget.value);
     select(+e.currentTarget.value);
   };
-  const check = function (x) {
-    return selected === x + 1;
-  };
-  const changeColor = (num) => {
-    const icon = document.querySelector("FaStar");
-    console.log(icon);
-  };
-
+  
   return (
     <div className="rating-check">
       <ul className='rating'>

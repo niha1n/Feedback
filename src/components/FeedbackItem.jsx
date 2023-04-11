@@ -18,7 +18,7 @@ function FeedbackItem({ item }) {
 
       <div className="text-display">{item.text}</div>
       <div className="rating-box">
-        {item.rating} <FaStar />{" "}
+        {item.rating}{" "}
       </div>
     </Card>
   );

@@ -6,7 +6,6 @@ import FeedbackForm from "./components/FeedbackForm";
 import AboutPage from "./pages/AboutPage";
 import AboutIconLink from "./components/AboutIconLink";
 import { FeedbackProvider } from "./context/FeedbackContext";
-const dotenv = require('dotenv');
 
 
 function App() {
